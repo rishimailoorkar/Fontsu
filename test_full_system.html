@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Test - Namma Fontsu</title>
+    <style>
+        body {
+            font-family: monospace;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007F8C;
+        }
+        h2 {
+            color: #007F8C;
+        }
+        .btn {
+            background: #007F8C;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #005f6a;
+        }
+        .result {
+            background: #f9f9f9;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        input, select {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Namma Fontsu System Test</h1>
+
+    <!-- Test 1: Check Supabase Connection -->
+    <div class="test-section">
+        <h2>1. Supabase Connection Test</h2>
+        <button class="btn" onclick="testConnection()">Test Connection</button>
+        <div id="connection-result" class="result"></div>
+    </div>
+
+    <!-- Test 2: Test Signup -->
+    <div class="test-section">
+        <h2>2. User Signup Test</h2>
+        <input type="text" id="signup-name" placeholder="Full Name" value="Test User">
+        <input type="email" id="signup-email" placeholder="Email" value="test@example.com">
+        <input type="password" id="signup-password" placeholder="Password" value="password123">
+        <select id="signup-role">
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+        </select>
+        <button class="btn" onclick="testSignup()">Test Signup</button>
+        <div id="signup-result" class="result"></div>
+    </div>
+
+    <!-- Test 3: Test Login -->
+    <div class="test-section">
+        <h2>3. User Login Test</h2>
+        <input type="email" id="login-email" placeholder="Email" value="test@example.com">
+        <input type="password" id="login-password" placeholder="Password" value="password123">
+        <button class="btn" onclick="testLogin()">Test Login</button>
+        <div id="login-result" class="result"></div>
+    </div>
+
+    <!-- Test 4: List Users -->
+    <div class="test-section">
+        <h2>4. List All Users</h2>
+        <button class="btn" onclick="listUsers()">List Users</button>
+        <div id="users-result" class="result"></div>
+    </div>
+
+    <!-- Test 5: List Fonts -->
+    <div class="test-section">
+        <h2>5. List All Fonts</h2>
+        <button class="btn" onclick="listFonts()">List Fonts</button>
+        <div id="fonts-result" class="result"></div>
+    </div>
+
+    <script>
+        async function testConnection() {
+            const resultDiv = document.getElementById('connection-result');
+            resultDiv.innerHTML = 'Testing connection...';
+            
+            try {
+                const response = await fetch('php/test_connection.php');
+                const text = await response.text();
+                resultDiv.innerHTML = text;
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function testSignup() {
+            const resultDiv = document.getElementById('signup-result');
+            resultDiv.innerHTML = 'Creating account...';
+            
+            const data = {
+                name: document.getElementById('signup-name').value,
+                email: document.getElementById('signup-email').value,
+                password: document.getElementById('signup-password').value,
+                role: document.getElementById('signup-role').value,
+                phone: ''
+            };
+            
+            try {
+                const response = await fetch('php/auth_signup.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `<span class="success">✓ Success!</span>\n${JSON.stringify(result, null, 2)}`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">✗ Failed</span>\n${JSON.stringify(result, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function testLogin() {
+            const resultDiv = document.getElementById('login-result');
+            resultDiv.innerHTML = 'Logging in...';
+            
+            const data = {
+                email: document.getElementById('login-email').value,
+                password: document.getElementById('login-password').value
+            };
+            
+            try {
+                const response = await fetch('php/auth_login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `<span class="success">✓ Success!</span>\n${JSON.stringify(result, null, 2)}`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">✗ Failed</span>\n${JSON.stringify(result, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function listUsers() {
+            const resultDiv = document.getElementById('users-result');
+            resultDiv.innerHTML = 'Fetching users...';
+            
+            try {
+                const response = await fetch('php/test_users_table.php');
+                const text = await response.text();
+                resultDiv.innerHTML = text;
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function listFonts() {
+            const resultDiv = document.getElementById('fonts-result');
+            resultDiv.innerHTML = 'Fetching fonts...';
+            
+            try {
+                const response = await fetch('php/get_fonts.php');
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `<span class="success">✓ Found ${result.data.length} fonts</span>\n${JSON.stringify(result.data, null, 2)}`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">✗ Failed</span>\n${JSON.stringify(result, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>

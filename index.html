@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Namma Fontsu - Indian Regional Font Platform</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@200;400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;700&family=Noto+Sans+Bengali:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/home.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#F5F5F0',
+            text: '#111111',
+            card: '#E2E2DC',
+            teal: '#007F8C',
+            highlight: '#E6B325',
+            dark: '#0C0C0C',
+            white: '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            brush: ['"Permanent Marker"', 'cursive'], 
+            kannada: ['"Noto Sans Kannada"', 'sans-serif'],
+            hindi: ['"Noto Sans Devanagari"', 'sans-serif'],
+            bengali: ['"Noto Sans Bengali"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-teal selection:text-white">
+
+  <!-- Texture Overlay -->
+  <div class="texture-overlay"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-bg/95 backdrop-blur-md border-b-2 border-text">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex flex-col items-start leading-none group">
+        <div class="text-xl font-brush text-text tracking-wide scale-y-110">NAMMA</div>
+        <div class="text-xl font-brush text-text tracking-wide relative scale-y-110">
+          FONTSU
+          <span class="absolute -bottom-1 left-0 w-full h-1 bg-teal rounded-full transform scale-x-100 origin-left group-hover:scale-x-110 transition-transform"></span>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-8 font-bold text-sm">
+        <a href="fonts.html" class="hover:text-teal uppercase tracking-wider">All Fonts</a>
+        <a href="designers.html" class="hover:text-teal uppercase tracking-wider">Designers</a>
+        <a href="about.html" class="hover:text-teal uppercase tracking-wider">About</a>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <button onclick="window.location.href='cart.html'" class="relative p-2 hover:text-teal transition-colors">
+          <i class="fa-solid fa-shopping-bag text-xl"></i>
+          <span id="cart-badge" class="absolute top-0 right-0 w-4 h-4 bg-teal text-white text-[10px] flex items-center justify-center rounded-full font-bold hidden">0</span>
+        </button>
+        <button onclick="window.location.href='auth.html'" class="hidden md:block btn-outline py-2 px-6 text-xs uppercase tracking-widest">
+          Log In
+        </button>
+        <button class="md:hidden text-text text-xl"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 w-full max-w-7xl mx-auto p-6 md:p-12 relative z-10">
+    
+    <!-- Hero Section -->
+    <div class="flex flex-col lg:flex-row gap-16 items-center min-h-[60vh] mb-20">
+      <div class="lg:w-1/2 space-y-8">
+        <div class="inline-block px-3 py-1 border-2 border-text bg-highlight text-text text-xs font-bold uppercase tracking-wider shadow-[2px_2px_0px_#111]">
+          The Marketplace for India
+        </div>
+        <h1 class="font-display text-7xl md:text-9xl font-bold text-text leading-[0.9]">
+          Design in <br> <span class="text-teal">your language.</span>
+        </h1>
+        <p class="text-xl font-medium text-text/70 max-w-lg border-l-4 border-teal pl-6">
+          Discover and license high-quality typefaces for Kannada, Hindi, Bengali, and more. Authentic. Expressive. Done right.
+        </p>
+        <div class="flex gap-4 pt-4">
+          <button onclick="window.location.href='fonts.html'" class="btn-primary">BROWSE MARKETPLACE</button>
+          <button onclick="window.location.href='designers.html'" class="btn-outline">SELL FONTS</button>
+        </div>
+      </div>
+      <!---kannada translate-->
+      <div class="lg:w-1/2 w-full perspective-1000">
+        <div class="bg-white border-2 border-text p-2 shadow-raw rotate-2 hover:rotate-0 transition-transform duration-300">
+          <div class="bg-card border border-text/20 relative" style="min-height: 400px;">
+            <div class="absolute top-4 right-4 text-[10px] font-mono text-text/40 z-10 pointer-events-none">EN → KN</div>
+            <div class="absolute bottom-4 left-0 right-0 text-sm text-text/50 uppercase tracking-widest text-center z-10 pointer-events-none">Press Enter to translate</div>
+            <textarea 
+              id="translator-box" 
+              class="text-4xl md:text-5xl font-bold text-text text-center font-kannada bg-transparent border-none outline-none w-full h-full resize-none placeholder-text/30 leading-relaxed p-8 flex items-center justify-center" 
+              placeholder="Type in English..."
+              style="overflow-wrap: break-word; word-wrap: break-word; min-height: 400px; display: flex; align-items: center; justify-content: center; vertical-align: middle;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Featured Section -->
+    <div class="mb-20">
+      <div class="flex justify-between items-end mb-8 border-b-2 border-text pb-4">
+        <h2 class="font-display text-4xl font-bold">New Drops</h2>
+        <a href="fonts.html" class="text-teal font-bold hover:underline">View All <i class="fa-solid fa-arrow-right ml-2"></i></a>
+      </div>
+      <div id="home-featured-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Fonts will be loaded here by JavaScript -->
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-text text-white py-12 border-t-4 border-teal relative z-10">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="md:col-span-2">
+        <h3 class="font-brush text-2xl mb-4">NAMMA FONTSU</h3>
+        <p class="text-white/60 max-w-sm">A platform for designers to discover, preview, and license authentic Indian regional typefaces. Designed for culture.</p>
+      </div>
+      <div>
+        <h4 class="font-bold uppercase tracking-widest text-teal mb-4 text-xs">Platform</h4>
+        <ul class="space-y-2 text-sm text-white/80">
+          <li><a href="fonts.html" class="hover:text-white">Browse Fonts</a></li>
+          <li><a href="designers.html" class="hover:text-white">Sell Your Fonts</a></li>
+          <li><a href="#" class="hover:text-white">Licensing Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold uppercase tracking-widest text-teal mb-4 text-xs">Connect</h4>
+        <ul class="space-y-2 text-sm text-white/80">
+          <li><a href="#" class="hover:text-white">Instagram</a></li>
+          <li><a href="#" class="hover:text-white">Twitter / X</a></li>
+          <li><a href="#" class="hover:text-white">Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/app.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    // Google Translate API integration
+    async function translateText(text, targetLang = 'kn') {
+      if (!text || text.trim() === '') return '';
+      
+      try {
+        // Using MyMemory Translation API (free, no API key required)
+        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${targetLang}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.responseStatus === 200 && data.responseData) {
+          return data.responseData.translatedText;
+        }
+        
+        // Fallback to LibreTranslate (backup free API)
+        const libreUrl = 'https://libretranslate.de/translate';
+        const libreResponse = await fetch(libreUrl, {
+          method: 'POST',
+          body: JSON.stringify({
+            q: text,
+            source: 'en',
+            target: targetLang,
+            format: 'text'
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        
+        const libreData = await libreResponse.json();
+        return libreData.translatedText || text;
+        
+      } catch (error) {
+        console.error('Translation error:', error);
+        return text;
+      }
+    }
+
+    // Setup translation on page load
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Fetch and load featured fonts from database
+      const grid = document.getElementById('home-featured-grid');
+      
+      try {
+        const timestamp = new Date().getTime();
+        const response = await fetch(`php/get_fonts.php?status=approved&_t=${timestamp}`, {
+          cache: 'no-cache',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        const result = await response.json();
+        
+        if (result.success && result.data.length > 0) {
+          // Show first 3 approved fonts
+          const featuredFonts = result.data.slice(0, 3);
+          featuredFonts.forEach(font => {
+            grid.innerHTML += createFontCard(font);
+          });
+          console.log(`Loaded ${featuredFonts.length} featured fonts from database`);
+        } else {
+          // Show message if no approved fonts
+          grid.innerHTML = `
+            <div class="col-span-3 bg-white border-2 border-text p-12 text-center">
+              <i class="fa-solid fa-font text-4xl text-text/20 mb-4"></i>
+              <p class="font-bold text-text/40">No fonts available yet. Check back soon!</p>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('Error loading featured fonts:', error);
+        grid.innerHTML = `
+          <div class="col-span-3 bg-white border-2 border-text p-12 text-center">
+            <p class="font-bold text-text/40">Unable to load fonts. Please try again later.</p>
+          </div>
+        `;
+      }
+
+      // Setup translator
+      const translatorBox = document.getElementById('translator-box');
+      let isTranslating = false;
+      
+      // Function to center textarea content vertically
+      function centerTextarea() {
+        const lineHeight = parseInt(window.getComputedStyle(translatorBox).lineHeight);
+        const height = translatorBox.clientHeight;
+        const scrollHeight = translatorBox.scrollHeight;
+        
+        if (scrollHeight < height) {
+          // Center perfectly with equal margins from top and bottom
+          const paddingTop = ((height - scrollHeight) / 2) + 100;
+          translatorBox.style.paddingTop = paddingTop + 'px';
+          translatorBox.style.paddingBottom = paddingTop + 'px';
+        } else {
+          translatorBox.style.paddingTop = '10rem';
+          translatorBox.style.paddingBottom = '2rem';
+        }
+      }
+      
+      // Center on input
+      translatorBox.addEventListener('input', centerTextarea);
+      
+      // Initial center
+      centerTextarea();
+      
+      // Handle Enter key for translation
+      translatorBox.addEventListener('keypress', async function(e) {
+        if (e.key === 'Enter' && !isTranslating) {
+          e.preventDefault();
+          
+          const text = this.value.trim();
+          if (!text) return;
+          
+          // Show translating state
+          isTranslating = true;
+          const originalText = this.value;
+          this.value = 'Translating...';
+          this.classList.remove('font-kannada');
+          this.classList.add('text-4xl');
+          centerTextarea();
+          
+          // Translate
+          const translated = await translateText(originalText, 'kn');
+          
+          // Show translation
+          this.value = translated || originalText;
+          this.classList.add('font-kannada');
+          this.classList.remove('text-4xl');
+          centerTextarea();
+          isTranslating = false;
+          
+          // Select all text for easy editing
+          this.select();
+        }
+      });
+      
+      // Clear on focus if showing previous translation
+      translatorBox.addEventListener('focus', function() {
+        if (!isTranslating && this.value && this.value !== 'Type in English...') {
+          // Allow user to edit
+        }
+      });
+    });
+  </script>
+</body>
+</html>

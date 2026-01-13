@@ -1,0 +1,262 @@
+/* Fonts Page Specific Styles */
+
+.fonts-container {
+  display: flex;
+  gap: 3rem;
+}
+
+.sidebar {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.filter-box {
+  background-color: white;
+  padding: 1.5rem;
+  border: 2px solid #111111;
+  box-shadow: 4px 4px 0px 0px #111111;
+  margin-bottom: 2rem;
+}
+
+.filter-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-title i {
+  color: #007F8C;
+}
+
+.filter-section {
+  margin-bottom: 1.5rem;
+}
+
+.filter-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(17, 17, 17, 0.5);
+  margin-bottom: 0.75rem;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s;
+}
+
+.filter-option:hover {
+  color: #007F8C;
+}
+
+.filter-option input[type="checkbox"] {
+  accent-color: #007F8C;
+  cursor: pointer;
+}
+
+.fonts-main {
+  flex: 1;
+}
+
+.fonts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.font-count {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: rgba(17, 17, 17, 0.6);
+}
+
+.sort-select {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #111111;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.sort-select:focus {
+  border-bottom-color: #007F8C;
+}
+
+.preview-bar {
+  position: sticky;
+  top: 5rem;
+  z-index: 30;
+  background: rgba(245, 245, 240, 0.95);
+  backdrop-filter: blur(12px);
+  border: 2px solid #111111;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 4px 4px 0px 0px #111111;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.preview-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.preview-input::placeholder {
+  color: rgba(17, 17, 17, 0.3);
+}
+
+.size-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 8rem;
+}
+
+.size-control i {
+  font-size: 0.75rem;
+}
+
+.fonts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.font-card {
+  background-color: white;
+  border: 2px solid #111111;
+  box-shadow: 4px 4px 0px 0px #111111;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.font-card:hover {
+  box-shadow: 4px 4px 0px 0px #007F8C;
+  transform: translateY(-2px);
+}
+
+.font-preview {
+  height: 12rem;
+  background-color: #E2E2DC;
+  border-bottom: 2px solid #111111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.font-script-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background-color: white;
+  border: 1px solid #111111;
+  padding: 0.125rem 0.25rem;
+}
+
+.font-preview-text {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #111111;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.font-card:hover .font-preview-text {
+  transform: scale(1.1);
+}
+
+.font-info {
+  padding: 1.25rem;
+}
+
+.font-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.font-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+.font-card:hover .font-name {
+  color: #007F8C;
+}
+
+.font-price {
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.font-designer {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(17, 17, 17, 0.5);
+  margin-bottom: 1rem;
+}
+
+.view-details-btn {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 1024px) {
+  .fonts-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+  }
+  
+  .fonts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .fonts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .preview-bar {
+    flex-direction: column;
+  }
+  
+  .size-control {
+    width: 100%;
+  }
+}

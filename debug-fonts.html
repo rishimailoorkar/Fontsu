@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Fonts API</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+    .section { background: white; padding: 20px; margin: 10px 0; border: 2px solid #333; }
+    pre { background: #f0f0f0; padding: 10px; overflow-x: auto; border-left: 4px solid #007F8C; }
+    .success { color: green; font-weight: bold; }
+    .error { color: red; font-weight: bold; }
+    button { background: #007F8C; color: white; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; }
+    button:hover { background: #006070; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Fonts API Debug Tool</h1>
+
+  <div class="section">
+    <h2>Step 1: Test API Endpoint</h2>
+    <button onclick="testAPI()">🚀 Fetch Approved Fonts</button>
+    <div id="api-result"></div>
+  </div>
+
+  <div class="section">
+    <h2>Step 2: Test createFontCard Function</h2>
+    <button onclick="testCardCreation()">🎨 Create Font Card</button>
+    <div id="card-result"></div>
+  </div>
+
+  <div class="section">
+    <h2>Step 3: View API Response</h2>
+    <a href="php/get_fonts.php?status=approved" target="_blank">
+      <button>📄 Open API in New Tab</button>
+    </a>
+  </div>
+
+  <div class="section">
+    <h2>Step 4: Console Logs</h2>
+    <p>Open browser DevTools (F12) → Console tab to see detailed logs</p>
+    <button onclick="window.location.href='fonts.html'">➡️ Go to Fonts Page</button>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    async function testAPI() {
+      const resultDiv = document.getElementById('api-result');
+      resultDiv.innerHTML = '<p>Loading...</p>';
+
+      try {
+        const timestamp = new Date().getTime();
+        const response = await fetch(`php/get_fonts.php?status=approved&_t=${timestamp}`, {
+          cache: 'no-cache',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        
+        console.log('Response status:', response.status);
+        const result = await response.json();
+        console.log('API Result:', result);
+
+        let html = '';
+        
+        if (result.success) {
+          html += `<p class="success">✓ API call successful!</p>`;
+          html += `<p><strong>Fonts found:</strong> ${result.count}</p>`;
+          html += `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+          
+          if (result.data && result.data.length > 0) {
+            html += '<h3>Font Details:</h3>';
+            result.data.forEach((font, index) => {
+              html += `<div style="border: 1px solid #ccc; padding: 10px; margin: 5px 0;">
+                <strong>${index + 1}. ${font.name}</strong><br>
+                Designer: ${font.designer}<br>
+                Script: ${font.script}<br>
+                Price: ₹${font.pricePersonal || font.price || 0}<br>
+                Status: ${font.status}
+              </div>`;
+            });
+          } else {
+            html += '<p class="error">⚠️ No fonts in response data array</p>';
+          }
+        } else {
+          html += `<p class="error">✗ API call failed</p>`;
+          html += `<p>Message: ${result.message}</p>`;
+          html += `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+        }
+
+        resultDiv.innerHTML = html;
+      } catch (error) {
+        console.error('Error:', error);
+        resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+      }
+    }
+
+    function testCardCreation() {
+      const resultDiv = document.getElementById('card-result');
+      
+      if (typeof createFontCard !== 'function') {
+        resultDiv.innerHTML = '<p class="error">✗ createFontCard function not found! Check if app.js is loaded.</p>';
+        return;
+      }
+
+      const testFont = {
+        id: 999,
+        name: "Test Font",
+        designer: "Test Designer",
+        script: "Kannada",
+        category: "Display",
+        pricePersonal: 499,
+        price: 499,
+        status: "approved"
+      };
+
+      try {
+        const cardHTML = createFontCard(testFont);
+        resultDiv.innerHTML = `
+          <p class="success">✓ Card creation successful!</p>
+          <h3>Generated HTML:</h3>
+          <pre>${cardHTML.substring(0, 500)}...</pre>
+          <h3>Rendered Card:</h3>
+          <div style="max-width: 400px;">${cardHTML}</div>
+        `;
+      } catch (error) {
+        resultDiv.innerHTML = `<p class="error">✗ Error creating card: ${error.message}</p>`;
+      }
+    }
+
+    // Auto-run on load
+    window.addEventListener('load', () => {
+      console.log('=== Debug Page Loaded ===');
+      console.log('createFontCard function exists:', typeof createFontCard === 'function');
+      console.log('Click buttons above to test API and card creation');
+    });
+  </script>
+</body>
+</html>

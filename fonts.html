@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Fonts - Namma Fontsu</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@200;400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;700&family=Noto+Sans+Bengali:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/fonts.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#F5F5F0',
+            text: '#111111',
+            card: '#E2E2DC',
+            teal: '#007F8C',
+            highlight: '#E6B325',
+            dark: '#0C0C0C',
+            white: '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            brush: ['"Permanent Marker"', 'cursive'], 
+            kannada: ['"Noto Sans Kannada"', 'sans-serif'],
+            hindi: ['"Noto Sans Devanagari"', 'sans-serif'],
+            bengali: ['"Noto Sans Bengali"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-teal selection:text-white">
+
+  <!-- Texture Overlay -->
+  <div class="texture-overlay"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-bg/95 backdrop-blur-md border-b-2 border-text">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex flex-col items-start leading-none group">
+        <div class="text-xl font-brush text-text tracking-wide scale-y-110">NAMMA</div>
+        <div class="text-xl font-brush text-text tracking-wide relative scale-y-110">
+          FONTSU
+          <span class="absolute -bottom-1 left-0 w-full h-1 bg-teal rounded-full transform scale-x-100 origin-left group-hover:scale-x-110 transition-transform"></span>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-8 font-bold text-sm">
+        <a href="fonts.html" class="text-teal uppercase tracking-wider">All Fonts</a>
+        <a href="designers.html" class="hover:text-teal uppercase tracking-wider">Designers</a>
+        <a href="about.html" class="hover:text-teal uppercase tracking-wider">About</a>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <button onclick="window.location.href='cart.html'" class="relative p-2 hover:text-teal transition-colors">
+          <i class="fa-solid fa-shopping-bag text-xl"></i>
+          <span id="cart-badge" class="absolute top-0 right-0 w-4 h-4 bg-teal text-white text-[10px] flex items-center justify-center rounded-full font-bold hidden">0</span>
+        </button>
+        <button onclick="window.location.href='auth.html'" class="hidden md:block btn-outline py-2 px-6 text-xs uppercase tracking-widest">
+          Log In
+        </button>
+        <button class="md:hidden text-text text-xl"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 w-full max-w-7xl mx-auto p-6 md:p-12 relative z-10">
+    
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="font-display text-5xl font-bold mb-2">Browse Fonts</h1>
+      <p class="text-text/60 font-bold">Discover authentic Indian regional typefaces</p>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="bg-white border-2 border-text p-4 mb-6 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <span id="font-count" class="text-sm font-bold text-text/60">Loading fonts...</span>
+        <div id="loading-indicator" class="hidden">
+          <div class="loader"></div>
+        </div>
+      </div>
+      <button onclick="loadFonts()" class="px-4 py-2 bg-teal text-white font-bold text-xs uppercase border-2 border-text hover:bg-text transition-colors">
+        <i class="fa-solid fa-refresh"></i> Refresh
+      </button>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Sidebar Filters -->
+      <div class="lg:w-1/4 space-y-6">
+        <div class="bg-white p-6 border-2 border-text shadow-raw">
+          <h3 class="font-display text-xl font-bold mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-filter text-teal"></i> Filters
+          </h3>
+          
+          <!-- Script Filter -->
+          <div class="mb-6">
+            <label class="block text-xs font-bold uppercase tracking-widest text-text/50 mb-3">Script</label>
+            <div class="space-y-2" id="filter-script">
+              <label class="flex items-center gap-2 cursor-pointer hover:text-teal">
+                <input type="checkbox" value="Kannada" class="accent-teal" onchange="applyFilters()"> Kannada
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-teal">
+                <input type="checkbox" value="Devanagari" class="accent-teal" onchange="applyFilters()"> Devanagari
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-teal">
+                <input type="checkbox" value="Bengali" class="accent-teal" onchange="applyFilters()"> Bengali
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-teal">
+                <input type="checkbox" value="Tamil" class="accent-teal" onchange="applyFilters()"> Tamil
+              </label>
+            </div>
+          </div>
+
+          <!-- Category Filter -->
+          <div class="mb-6">
+            <label class="block text-xs font-bold uppercase tracking-widest text-text/50 mb-3">Style</label>
+            <div class="space-y-2" id="filter-category">
+              <label class="flex items-center gap-2 cursor-pointer hover:text-teal">
+                <input type="checkbox" value="Display" class="accent-teal" onchange="applyFilters()"> Display
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-teal">
+                <input type="checkbox" value="Serif" class="accent-teal" onchange="applyFilters()"> Serif
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-teal">
+                <input type="checkbox" value="Sans" class="accent-teal" onchange="applyFilters()"> Sans
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer hover:text-teal">
+                <input type="checkbox" value="Handwritten" class="accent-teal" onchange="applyFilters()"> Handwritten
+              </label>
+            </div>
+          </div>
+
+          <button onclick="clearFilters()" class="w-full py-2 text-sm font-bold border-2 border-text hover:bg-text hover:text-white transition-colors">
+            Clear Filters
+          </button>
+        </div>
+      </div>
+
+      <!-- Font Grid -->
+      <div class="lg:w-3/4">
+        <!-- Live Type Tester -->
+        <div class="bg-white border-2 border-text p-4 mb-6 flex gap-4 items-center shadow-raw">
+          <i class="fa-solid fa-keyboard text-teal text-xl"></i>
+          <input type="text" id="preview-text" placeholder="Type to preview all fonts..." class="flex-1 bg-transparent border-none outline-none font-bold text-lg placeholder-text/30" oninput="updatePreviews(this.value)">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-text-height text-xs"></i>
+            <input type="range" min="24" max="72" value="48" class="w-24" oninput="updatePreviewSize(this.value)">
+          </div>
+        </div>
+
+        <!-- Fonts Grid -->
+        <div id="fonts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Fonts will be injected here by JavaScript -->
+          <div class="col-span-2 bg-white border-2 border-text p-12 text-center">
+            <div class="loader mx-auto mb-4"></div>
+            <p class="font-bold text-text/40">Loading fonts...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-text text-white py-12 border-t-4 border-teal relative z-10 mt-20">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="md:col-span-2">
+        <h3 class="font-brush text-2xl mb-4">NAMMA FONTSU</h3>
+        <p class="text-white/60 max-w-sm">A platform for designers to discover, preview, and license authentic Indian regional typefaces.</p>
+      </div>
+      <div>
+        <h4 class="font-bold uppercase tracking-widest text-teal mb-4 text-xs">Platform</h4>
+        <ul class="space-y-2 text-sm text-white/80">
+          <li><a href="fonts.html" class="hover:text-white">Browse Fonts</a></li>
+          <li><a href="designers.html" class="hover:text-white">Sell Your Fonts</a></li>
+          <li><a href="about.html" class="hover:text-white">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold uppercase tracking-widest text-teal mb-4 text-xs">Admin</h4>
+        <ul class="space-y-2 text-sm text-white/80">
+          <li><a href="admin.html" class="hover:text-white">Admin Panel</a></li>
+          <li><a href="test_approved_fonts.php" class="hover:text-white">Test Database</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/cart.js"></script>
+  <script>
+    // Global state
+    let allFonts = [];
+    let filteredFonts = [];
+
+    // Mock fonts data
+    const mockFonts = [
+      { 
+        id: 1, 
+        name: "Hombe Display", 
+        designer: "R. Designer", 
+        script: "Kannada", 
+        category: "Display", 
+        pricePersonal: 499, 
+        price: 499,
+        preview: "ಕರ್ನಾಟಕ"
+      },
+      { 
+        id: 2, 
+        name: "Malgudi Serif", 
+        designer: "Type Studio", 
+        script: "Devanagari", 
+        category: "Serif", 
+        pricePersonal: 799, 
+        price: 799,
+        preview: "मालगुडी"
+      },
+      { 
+        id: 3, 
+        name: "Bengal Tiger", 
+        designer: "Kolkata Types", 
+        script: "Bengali", 
+        category: "Display", 
+        pricePersonal: 699, 
+        price: 699,
+        preview: "বাঘ"
+      },
+      { 
+        id: 4, 
+        name: "Tech Bengaluru", 
+        designer: "Pixel Arts", 
+        script: "Kannada", 
+        category: "Sans", 
+        pricePersonal: 899, 
+        price: 899,
+        preview: "ತಂತ್ರಜ್ಞಾನ"
+      },
+      { 
+        id: 5, 
+        name: "Chai Shop", 
+        designer: "Desi Art", 
+        script: "Devanagari", 
+        category: "Handwritten", 
+        pricePersonal: 299, 
+        price: 299,
+        preview: "चाय"
+      },
+      { 
+        id: 6, 
+        name: "Kolkata Script", 
+        designer: "Bengali Arts", 
+        script: "Bengali", 
+        category: "Handwritten", 
+        pricePersonal: 599, 
+        price: 599,
+        preview: "কলকাতা"
+      }
+    ];
+
+    // Script to preview text mapping
+    const scriptPreviews = {
+      'Kannada': 'ನಮ್ಮ ಫಾಂಟ್',
+      'Devanagari': 'नमस्ते',
+      'Bengali': 'বাংলা',
+      'Tamil': 'தமிழ்',
+      'Telugu': 'తెలుగు',
+      'Malayalam': 'മലയാളം',
+      'Gujarati': 'ગુજરાતી',
+      'Punjabi': 'ਪੰਜਾಬੀ'
+    };
+
+    // Script to font class mapping
+    const scriptFontClasses = {
+      'Kannada': 'font-kannada',
+      'Devanagari': 'font-hindi',
+      'Bengali': 'font-bengali',
+      'Tamil': 'font-kannada',
+      'Telugu': 'font-kannada',
+      'Malayalam': 'font-kannada',
+      'Gujarati': 'font-hindi',
+      'Punjabi': 'font-hindi'
+    };
+
+    // Load custom font dynamically
+    function loadCustomFont(font) {
+      if (font.fileUrl && font.fileName) {
+        const fontFamilyName = `CustomFont-${font.id}`;
+        const fontFormat = font.fileExtension === 'otf' ? 'opentype' : 
+                          font.fileExtension === 'woff' ? 'woff' :
+                          font.fileExtension === 'woff2' ? 'woff2' : 'truetype';
+        
+        const fontFace = `
+          @font-face {
+            font-family: '${fontFamilyName}';
+            src: url('${font.fileUrl}') format('${fontFormat}');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+          }
+        `;
+        
+        // Check if style already exists
+        const existingStyle = document.getElementById(`font-style-${font.id}`);
+        if (!existingStyle) {
+          const style = document.createElement('style');
+          style.id = `font-style-${font.id}`;
+          style.textContent = fontFace;
+          document.head.appendChild(style);
+        }
+        
+        return fontFamilyName;
+      }
+      return null;
+    }
+
+    // Create font card HTML
+    function createFontCard(font) {
+      const preview = font.preview || scriptPreviews[font.script] || 'Abc';
+      const fontClass = scriptFontClasses[font.script] || 'font-display';
+      const price = font.pricePersonal || font.price || 0;
+      const designer = font.designer || 'Unknown';
+      const status = font.status || 'pending';
+      
+      // Load custom font if available (database fonts)
+      const customFontFamily = loadCustomFont(font);
+      const fontStyle = customFontFamily ? `font-family: '${customFontFamily}', ${fontClass};` : '';
+      
+      // Status badge styling
+      const statusBadge = status === 'approved' 
+        ? '<span class="text-xs bg-teal/10 border border-teal text-teal px-2 py-1 font-bold">APPROVED</span>'
+        : '<span class="text-xs bg-highlight/20 border border-highlight text-text px-2 py-1 font-bold">PENDING</span>';
+      
+      // Price display - show FREE for 0 price
+      const priceDisplay = price === 0 ? 'FREE' : `₹${price}`;
+      
+      return `
+        <div class="bg-white border-2 border-text shadow-raw hover:shadow-raw-teal transition-all group cursor-pointer" onclick="window.location.href='font-detail.html?id=${font.id}'">
+          <div class="h-48 bg-card border-b-2 border-text flex items-center justify-center p-6 overflow-hidden relative">
+            <div class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-widest bg-white border border-text px-2 py-1">${font.script}</div>
+            <h3 class="preview-text text-5xl font-bold text-text group-hover:scale-110 transition-transform duration-300 ${fontClass} text-center" style="font-size: 48px; ${fontStyle}">${preview}</h3>
+          </div>
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h4 class="font-display text-xl font-bold group-hover:text-teal transition-colors">${font.name}</h4>
+              <span class="font-bold text-sm ${price === 0 ? 'text-highlight' : 'text-teal'}">${priceDisplay}</span>
+            </div>
+            <p class="text-xs font-bold text-text/50 uppercase tracking-widest mb-4">By ${designer}</p>
+            <div class="flex gap-2">
+              <span class="text-xs bg-bg border border-text px-2 py-1 font-bold">${font.category || 'Display'}</span>
+              ${statusBadge}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Load fonts from API
+    async function loadFonts() {
+      const grid = document.getElementById('fonts-grid');
+      const countEl = document.getElementById('font-count');
+      const loadingIndicator = document.getElementById('loading-indicator');
+      
+      loadingIndicator.classList.remove('hidden');
+      
+      try {
+        // Try to load ALL fonts from database (approved and pending)
+        const timestamp = new Date().getTime();
+        const url = `php/get_fonts.php?_t=${timestamp}`;
+        
+        console.log('🔄 Fetching fonts from:', url);
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          cache: 'no-cache',
+          headers: {
+            'Accept': 'application/json',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        
+        console.log('📡 Response status:', response.status, response.ok);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const responseText = await response.text();
+        console.log('📦 Raw response length:', responseText.length);
+        console.log('📦 Raw response preview:', responseText.substring(0, 200));
+        
+        // Try to parse as JSON
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (parseError) {
+          console.error('❌ JSON Parse Error:', parseError);
+          console.error('❌ Response text:', responseText);
+          throw new Error('Invalid JSON from server');
+        }
+        
+        console.log('✅ Parsed result:', result);
+        
+        loadingIndicator.classList.add('hidden');
+        
+        if (result.success && result.data && Array.isArray(result.data)) {
+          if (result.data.length > 0) {
+            console.log(`✅ Found ${result.data.length} fonts from database`);
+            
+            // Show all fonts (for development/testing - you can filter by approved in production)
+            allFonts = result.data;
+            
+            // Count by status
+            const approvedCount = allFonts.filter(f => f.status === 'approved').length;
+            const pendingCount = allFonts.filter(f => f.status === 'pending').length;
+            
+            console.log(`✅ ${approvedCount} approved, ${pendingCount} pending fonts`);
+            
+            filteredFonts = [...allFonts];
+            renderFonts(filteredFonts);
+            countEl.textContent = `Showing ${allFonts.length} font${allFonts.length !== 1 ? 's' : ''} (${approvedCount} approved, ${pendingCount} pending)`;
+          } else {
+            console.log('⚠️ No fonts found in database');
+            allFonts = [];
+            filteredFonts = [];
+            renderFonts(filteredFonts);
+          }
+        } else {
+          console.log('⚠️ No fonts in response');
+          allFonts = [];
+          filteredFonts = [];
+          renderFonts(filteredFonts);
+        }
+      } catch (error) {
+        console.error('❌ Error fetching fonts:', error);
+        loadingIndicator.classList.add('hidden');
+        allFonts = [];
+        filteredFonts = [];
+        renderFonts(filteredFonts);
+      }
+    }
+
+    // Render fonts to grid
+    function renderFonts(fonts) {
+      const grid = document.getElementById('fonts-grid');
+      const countEl = document.getElementById('font-count');
+      
+      grid.innerHTML = '';
+      
+      if (fonts.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-2 bg-white border-2 border-text p-12 text-center">
+            <i class="fa-solid fa-box-open text-4xl text-text/20 mb-4"></i>
+            <p class="font-bold text-text/60 mb-2">No approved fonts found</p>
+            <p class="text-sm text-text/40 mb-4">Upload and approve fonts from the <a href="admin.html" class="text-teal underline">admin panel</a></p>
+            <a href="designers.html" class="btn-primary inline-block">Upload Font</a>
+          </div>
+        `;
+        countEl.textContent = '0 fonts available';
+        return;
+      }
+      
+      countEl.textContent = `Showing ${fonts.length} font${fonts.length !== 1 ? 's' : ''}`;
+      
+      fonts.forEach(font => {
+        grid.innerHTML += createFontCard(font);
+      });
+      
+      console.log(`✅ Rendered ${fonts.length} fonts to grid`);
+    }
+
+    // Apply filters
+    function applyFilters() {
+      const scriptChecks = Array.from(document.querySelectorAll('#filter-script input:checked')).map(cb => cb.value);
+      const categoryChecks = Array.from(document.querySelectorAll('#filter-category input:checked')).map(cb => cb.value);
+      
+      filteredFonts = allFonts.filter(font => {
+        const matchScript = scriptChecks.length === 0 || scriptChecks.includes(font.script);
+        const matchCategory = categoryChecks.length === 0 || categoryChecks.includes(font.category);
+        return matchScript && matchCategory;
+      });
+      
+      renderFonts(filteredFonts);
+      console.log(`🔍 Filters applied: ${filteredFonts.length} fonts match`);
+    }
+
+    // Clear all filters
+    function clearFilters() {
+      document.querySelectorAll('#filter-script input, #filter-category input').forEach(cb => {
+        cb.checked = false;
+      });
+      filteredFonts = [...allFonts];
+      renderFonts(filteredFonts);
+    }
+
+    // Update preview text
+    function updatePreviews(text) {
+      if (!text) return;
+      document.querySelectorAll('.preview-text').forEach(el => {
+        el.textContent = text;
+      });
+    }
+
+    // Update preview size
+    function updatePreviewSize(size) {
+      document.querySelectorAll('.preview-text').forEach(el => {
+        el.style.fontSize = size + 'px';
+      });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🚀 Fonts page loaded');
+      loadFonts();
+      
+      // Auto-refresh every 10 seconds
+      setInterval(loadFonts, 10000);
+    });
+  </script>
+</body>
+</html>

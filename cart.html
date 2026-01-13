@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart - Namma Fontsu</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@200;400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#F5F5F0',
+            text: '#111111',
+            card: '#E2E2DC',
+            teal: '#007F8C',
+            highlight: '#E6B325',
+            dark: '#0C0C0C',
+            white: '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            brush: ['"Permanent Marker"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-teal selection:text-white">
+
+  <!-- Texture Overlay -->
+  <div class="texture-overlay"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-bg/95 backdrop-blur-md border-b-2 border-text">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex flex-col items-start leading-none group">
+        <div class="text-xl font-brush text-text tracking-wide scale-y-110">NAMMA</div>
+        <div class="text-xl font-brush text-text tracking-wide relative scale-y-110">
+          FONTSU
+          <span class="absolute -bottom-1 left-0 w-full h-1 bg-teal rounded-full transform scale-x-100 origin-left group-hover:scale-x-110 transition-transform"></span>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-8 font-bold text-sm">
+        <a href="fonts.html" class="hover:text-teal uppercase tracking-wider">All Fonts</a>
+        <a href="designers.html" class="hover:text-teal uppercase tracking-wider">Designers</a>
+        <a href="about.html" class="hover:text-teal uppercase tracking-wider">About</a>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <button onclick="window.location.href='cart.html'" class="relative p-2 text-teal transition-colors">
+          <i class="fa-solid fa-shopping-bag text-xl"></i>
+          <span id="cart-badge" class="absolute top-0 right-0 w-5 h-5 bg-teal text-white text-[10px] flex items-center justify-center rounded-full font-bold">0</span>
+        </button>
+        <button onclick="window.location.href='auth.html'" class="hidden md:block btn-outline py-2 px-6 text-xs uppercase tracking-widest">
+          Log In
+        </button>
+        <button class="md:hidden text-text text-xl"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 py-12">
+      
+      <!-- Header -->
+      <div class="mb-12">
+        <h1 class="font-display text-6xl md:text-7xl font-bold text-text mb-4">Shopping Cart</h1>
+        <p class="text-xl text-text/60 font-medium">Review your selected fonts and proceed to checkout</p>
+      </div>
+
+      <!-- Empty Cart State -->
+      <div id="empty-cart" class="text-center py-20 hidden">
+        <div class="inline-block p-8 bg-card border-2 border-text mb-6">
+          <i class="fa-solid fa-shopping-bag text-6xl text-text/30"></i>
+        </div>
+        <h2 class="font-display text-3xl font-bold text-text mb-4">Your cart is empty</h2>
+        <p class="text-text/60 mb-8">Browse our collection and add some fonts!</p>
+        <button onclick="window.location.href='fonts.html'" class="btn-primary">
+          Browse Fonts
+        </button>
+      </div>
+
+      <!-- Cart Content -->
+      <div id="cart-content" class="grid lg:grid-cols-3 gap-8">
+        
+        <!-- Cart Items -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="font-display text-2xl font-bold text-text">Cart Items (<span id="item-count">0</span>)</h2>
+            <button onclick="clearCart()" class="text-sm font-bold text-text/60 hover:text-red-600 uppercase tracking-wider">
+              <i class="fa-solid fa-trash mr-2"></i>Clear All
+            </button>
+          </div>
+          <div id="cart-items" class="space-y-4">
+            <!-- Items will be inserted here -->
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="lg:col-span-1">
+          <div class="bg-white border-2 border-text p-6 sticky top-24" style="box-shadow: 6px 6px 0px #111111;">
+            <h3 class="font-display text-2xl font-bold text-text mb-6">Order Summary</h3>
+            
+            <div class="space-y-4 mb-6 pb-6 border-b-2 border-text/10">
+              <div class="flex justify-between text-text/70">
+                <span class="font-medium">Subtotal</span>
+                <span class="font-bold">₹<span id="subtotal">0</span></span>
+              </div>
+              <div class="flex justify-between text-text/70">
+                <span class="font-medium">Tax (18% GST)</span>
+                <span class="font-bold">₹<span id="tax">0</span></span>
+              </div>
+            </div>
+            
+            <div class="flex justify-between text-xl font-bold text-text mb-6">
+              <span>Total</span>
+              <span>₹<span id="total">0</span></span>
+            </div>
+            
+            <button onclick="proceedToCheckout()" class="btn-primary w-full mb-3">
+              <i class="fa-solid fa-lock mr-2"></i>Proceed to Checkout
+            </button>
+            
+            <button onclick="window.location.href='fonts.html'" class="w-full py-3 border-2 border-text font-bold text-sm uppercase tracking-wider hover:bg-card transition-colors">
+              Continue Shopping
+            </button>
+            
+            <div class="mt-6 pt-6 border-t-2 border-text/10">
+              <p class="text-xs text-text/60 text-center">
+                <i class="fa-solid fa-shield-halved mr-1"></i>
+                Secure checkout with 256-bit SSL encryption
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-text text-white py-12 border-t-4 border-teal relative z-10">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="md:col-span-2">
+        <h3 class="font-brush text-2xl mb-4">NAMMA FONTSU</h3>
+        <p class="text-white/60 max-w-sm">A platform for designers to discover, preview, and license authentic Indian regional typefaces.</p>
+      </div>
+      <div>
+        <h4 class="font-bold uppercase tracking-widest text-teal mb-4 text-xs">Platform</h4>
+        <ul class="space-y-2 text-sm text-white/80">
+          <li><a href="fonts.html" class="hover:text-white">Browse Fonts</a></li>
+          <li><a href="designers.html" class="hover:text-white">Sell Your Fonts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold uppercase tracking-widest text-teal mb-4 text-xs">Connect</h4>
+        <ul class="space-y-2 text-sm text-white/80">
+          <li><a href="#" class="hover:text-white">Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-bg border-2 border-text max-w-2xl w-full max-h-[90vh] overflow-y-auto" style="box-shadow: 8px 8px 0px #111111;">
+      <div class="sticky top-0 bg-bg border-b-2 border-text p-6 flex items-center justify-between">
+        <h2 class="font-display text-3xl font-bold text-text">Checkout</h2>
+        <button onclick="closeCheckoutModal()" class="p-2 hover:bg-card rounded-full">
+          <i class="fa-solid fa-times text-2xl"></i>
+        </button>
+      </div>
+      
+      <div class="p-6 space-y-6">
+        <!-- Order Summary in Modal -->
+        <div>
+          <h3 class="font-bold text-lg mb-4">Order Items</h3>
+          <div id="checkout-items" class="space-y-3">
+            <!-- Will be populated -->
+          </div>
+        </div>
+
+        <!-- Payment Options -->
+        <div>
+          <h3 class="font-bold text-lg mb-4">Payment Method</h3>
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 p-4 border-2 border-text cursor-pointer hover:bg-card">
+              <input type="radio" name="payment" value="card" checked class="w-5 h-5 accent-teal">
+              <div>
+                <div class="font-bold text-sm">Credit / Debit Card</div>
+                <div class="text-xs text-text/60">Secure payment via Razorpay</div>
+              </div>
+            </label>
+            <label class="flex items-center gap-3 p-4 border-2 border-text cursor-pointer hover:bg-card">
+              <input type="radio" name="payment" value="upi" class="w-5 h-5 accent-teal">
+              <div>
+                <div class="font-bold text-sm">UPI</div>
+                <div class="text-xs text-text/60">Pay via Google Pay, PhonePe, Paytm</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Total -->
+        <div class="bg-card border-2 border-text p-6">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-text/70">Subtotal</span>
+            <span class="font-bold">₹<span id="modal-subtotal">0</span></span>
+          </div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-text/70">Tax (18% GST)</span>
+            <span class="font-bold">₹<span id="modal-tax">0</span></span>
+          </div>
+          <div class="flex justify-between items-center text-2xl font-bold pt-4 border-t-2 border-text">
+            <span>Total</span>
+            <span>₹<span id="modal-total">0</span></span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4">
+          <button onclick="closeCheckoutModal()" class="flex-1 py-3 border-2 border-text font-bold text-sm uppercase tracking-wider hover:bg-card">
+            Cancel
+          </button>
+          <button onclick="completePurchase()" class="flex-1 btn-primary">
+            <i class="fa-solid fa-check mr-2"></i>Complete Purchase
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="success-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-bg border-2 border-text max-w-md w-full" style="box-shadow: 8px 8px 0px #111111;">
+      <div class="p-8 text-center">
+        <div class="inline-block p-6 bg-teal text-white rounded-full mb-6">
+          <i class="fa-solid fa-check text-4xl"></i>
+        </div>
+        <h2 class="font-display text-3xl font-bold text-text mb-4">Purchase Successful!</h2>
+        <p class="text-text/70 mb-6">Your fonts are ready to download</p>
+        
+        <div id="download-links" class="space-y-3 mb-6">
+          <!-- Download links will be inserted here -->
+        </div>
+
+        <button onclick="closeSuccessModal()" class="btn-primary w-full">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/app.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    // Cart management
+    let cart = [];
+
+    // Load cart on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCart();
+      updateCartDisplay();
+      updateCartBadge();
+    });
+
+    function loadCart() {
+      const savedCart = localStorage.getItem('fontCart');
+      if (savedCart) {
+        cart = JSON.parse(savedCart);
+      }
+    }
+
+    function saveCart() {
+      localStorage.setItem('fontCart', JSON.stringify(cart));
+    }
+
+    function updateCartBadge() {
+      const badge = document.getElementById('cart-badge');
+      const count = cart.length;
+      badge.textContent = count;
+      badge.classList.toggle('hidden', count === 0);
+    }
+
+    function updateCartDisplay() {
+      const emptyCart = document.getElementById('empty-cart');
+      const cartContent = document.getElementById('cart-content');
+      const cartItems = document.getElementById('cart-items');
+      const itemCount = document.getElementById('item-count');
+
+      if (cart.length === 0) {
+        emptyCart.classList.remove('hidden');
+        cartContent.classList.add('hidden');
+        return;
+      }
+
+      emptyCart.classList.add('hidden');
+      cartContent.classList.remove('hidden');
+      itemCount.textContent = cart.length;
+
+      // Render cart items
+      cartItems.innerHTML = cart.map((item, index) => `
+        <div class="bg-white border-2 border-text p-4 flex gap-4" style="box-shadow: 4px 4px 0px #111111;">
+          <div class="flex-1">
+            <h3 class="font-display text-xl font-bold text-text mb-1">${item.name}</h3>
+            <p class="text-sm text-text/60 mb-2">by ${item.designer}</p>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="px-2 py-1 bg-card border border-text font-bold">${item.script}</span>
+              <span class="px-2 py-1 bg-card border border-text font-bold">${item.category}</span>
+              <span class="px-2 py-1 bg-card border border-text font-bold">${item.licenseType === 'personal' ? 'Personal License' : 'Commercial License'}</span>
+            </div>
+          </div>
+          <div class="flex flex-col items-end justify-between">
+            <button onclick="removeFromCart(${index})" class="p-2 hover:bg-red-100 rounded-full text-red-600">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+            <div class="text-right">
+              <div class="font-bold text-2xl text-text">₹${item.price === 0 ? 'FREE' : item.price}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      updateOrderSummary();
+    }
+
+    function updateOrderSummary() {
+      const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+      const tax = Math.round(subtotal * 0.18);
+      const total = subtotal + tax;
+
+      document.getElementById('subtotal').textContent = subtotal;
+      document.getElementById('tax').textContent = tax;
+      document.getElementById('total').textContent = total;
+    }
+
+    function removeFromCart(index) {
+      if (confirm('Remove this font from cart?')) {
+        cart.splice(index, 1);
+        saveCart();
+        updateCartDisplay();
+        updateCartBadge();
+      }
+    }
+
+    function clearCart() {
+      if (confirm('Remove all items from cart?')) {
+        cart = [];
+        saveCart();
+        updateCartDisplay();
+        updateCartBadge();
+      }
+    }
+
+    function proceedToCheckout() {
+      if (cart.length === 0) {
+        alert('Your cart is empty');
+        return;
+      }
+
+      // Populate checkout modal
+      const checkoutItems = document.getElementById('checkout-items');
+      checkoutItems.innerHTML = cart.map(item => `
+        <div class="flex justify-between items-center p-3 bg-card">
+          <div>
+            <div class="font-bold">${item.name}</div>
+            <div class="text-xs text-text/60">${item.licenseType === 'personal' ? 'Personal' : 'Commercial'} License</div>
+          </div>
+          <div class="font-bold">₹${item.price === 0 ? 'FREE' : item.price}</div>
+        </div>
+      `).join('');
+
+      const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+      const tax = Math.round(subtotal * 0.18);
+      const total = subtotal + tax;
+
+      document.getElementById('modal-subtotal').textContent = subtotal;
+      document.getElementById('modal-tax').textContent = tax;
+      document.getElementById('modal-total').textContent = total;
+
+      document.getElementById('checkout-modal').classList.remove('hidden');
+      document.getElementById('checkout-modal').classList.add('flex');
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkout-modal').classList.add('hidden');
+      document.getElementById('checkout-modal').classList.remove('flex');
+    }
+
+    function completePurchase() {
+      // Simulate purchase
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      
+      // Show success modal with download links
+      const downloadLinks = document.getElementById('download-links');
+      downloadLinks.innerHTML = cart.map(item => `
+        <button onclick="downloadFont('${item.name}', ${item.id})" class="w-full py-3 px-4 bg-white border-2 border-text font-bold text-sm uppercase tracking-wider hover:bg-teal hover:text-white transition-colors flex items-center justify-between">
+          <span><i class="fa-solid fa-download mr-2"></i>${item.name}</span>
+          <span class="text-xs">${item.price === 0 ? 'FREE' : '₹' + item.price}</span>
+        </button>
+      `).join('');
+
+      closeCheckoutModal();
+      document.getElementById('success-modal').classList.remove('hidden');
+      document.getElementById('success-modal').classList.add('flex');
+
+      // Save purchase history
+      savePurchaseHistory();
+    }
+
+    function savePurchaseHistory() {
+      const purchases = JSON.parse(localStorage.getItem('purchasedFonts') || '[]');
+      cart.forEach(item => {
+        if (!purchases.find(p => p.id === item.id && p.licenseType === item.licenseType)) {
+          purchases.push({
+            ...item,
+            purchaseDate: new Date().toISOString()
+          });
+        }
+      });
+      localStorage.setItem('purchasedFonts', JSON.stringify(purchases));
+    }
+
+    function downloadFont(fontName, fontId) {
+      // Download the actual font file
+      const downloadUrl = `php/download_font.php?id=${fontId}`;
+      
+      // Create a temporary link and trigger download
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = fontName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Show feedback
+      const btn = event.target;
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Downloaded!';
+      btn.classList.add('bg-teal', 'text-white');
+      
+      setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.classList.remove('bg-teal', 'text-white');
+      }, 2000);
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('success-modal').classList.add('hidden');
+      document.getElementById('success-modal').classList.remove('flex');
+      
+      // Clear cart after successful purchase
+      cart = [];
+      saveCart();
+      updateCartDisplay();
+      updateCartBadge();
+      
+      // Redirect to fonts page
+      setTimeout(() => {
+        window.location.href = 'fonts.html';
+      }, 500);
+    }
+  </script>
+</body>
+</html>

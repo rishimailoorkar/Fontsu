@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Namma Fontsu</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@200;400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;700&family=Noto+Sans+Bengali:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/about.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#F5F5F0',
+            text: '#111111',
+            card: '#E2E2DC',
+            teal: '#007F8C',
+            highlight: '#E6B325',
+            dark: '#0C0C0C',
+            white: '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            brush: ['"Permanent Marker"', 'cursive'], 
+            kannada: ['"Noto Sans Kannada"', 'sans-serif'],
+            hindi: ['"Noto Sans Devanagari"', 'sans-serif'],
+            bengali: ['"Noto Sans Bengali"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-teal selection:text-white">
+
+  <!-- Texture Overlay -->
+  <div class="texture-overlay"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-bg/95 backdrop-blur-md border-b-2 border-text">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex flex-col items-start leading-none group">
+        <div class="text-xl font-brush text-text tracking-wide scale-y-110">NAMMA</div>
+        <div class="text-xl font-brush text-text tracking-wide relative scale-y-110">
+          FONTSU
+          <span class="absolute -bottom-1 left-0 w-full h-1 bg-teal rounded-full transform scale-x-100 origin-left group-hover:scale-x-110 transition-transform"></span>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-8 font-bold text-sm">
+        <a href="fonts.html" class="hover:text-teal uppercase tracking-wider">All Fonts</a>
+        <a href="designers.html" class="hover:text-teal uppercase tracking-wider">Designers</a>
+        <a href="about.html" class="hover:text-teal uppercase tracking-wider text-teal">About</a>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <button onclick="window.location.href='cart.html'" class="relative p-2 hover:text-teal transition-colors">
+          <i class="fa-solid fa-shopping-bag text-xl"></i>
+          <span id="cart-badge" class="absolute top-0 right-0 w-4 h-4 bg-teal text-white text-[10px] flex items-center justify-center rounded-full font-bold hidden">0</span>
+        </button>
+        <button onclick="window.location.href='auth.html'" class="hidden md:block btn-outline py-2 px-6 text-xs uppercase tracking-widest">
+          Log In
+        </button>
+        <button class="md:hidden text-text text-xl"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 w-full max-w-7xl mx-auto p-6 md:p-12 relative z-10">
+    
+    <!-- Hero Section -->
+    <div class="about-hero py-12">
+      <h1 class="about-title">About Namma Fontsu</h1>
+      <p class="about-subtitle">
+        We're building India's first dedicated marketplace for regional typefaces. 
+        A platform where designers can discover authentic fonts and type designers can earn from their craft.
+      </p>
+    </div>
+
+    <!-- Mission Cards -->
+    <div class="mission-section">
+      <div class="mission-card">
+        <i class="fa-solid fa-palette"></i>
+        <h3>Authentic Design</h3>
+        <p>Every font is carefully crafted to respect the cultural and linguistic heritage of Indian scripts.</p>
+      </div>
+      
+      <div class="mission-card">
+        <i class="fa-solid fa-users"></i>
+        <h3>Empowering Creators</h3>
+        <p>We provide a platform for type designers to monetize their work and reach a wider audience.</p>
+      </div>
+      
+      <div class="mission-card">
+        <i class="fa-solid fa-globe"></i>
+        <h3>Global Accessibility</h3>
+        <p>Making Indian regional fonts accessible to designers, brands, and creators worldwide.</p>
+      </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Fonts Available</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-number">12</div>
+          <div class="stat-label">Indian Scripts</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-number">100+</div>
+          <div class="stat-label">Type Designers</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-number">10K+</div>
+          <div class="stat-label">Downloads</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="team-section">
+      <div class="team-header">
+        <h2>Meet the Team</h2>
+        <p class="text-text/60 font-medium">Passionate about type, culture, and design</p>
+      </div>
+      
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="team-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="team-name">Priya Sharma</div>
+          <div class="team-role">Founder & Designer</div>
+        </div>
+        
+        <div class="team-member">
+          <div class="team-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="team-name">Arjun Patel</div>
+          <div class="team-role">Type Director</div>
+        </div>
+        
+        <div class="team-member">
+          <div class="team-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="team-name">Meera Reddy</div>
+          <div class="team-role">Community Manager</div>
+        </div>
+        
+        <div class="team-member">
+          <div class="team-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="team-name">Karthik Kumar</div>
+          <div class="team-role">Lead Developer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="text-center py-12 bg-card border-2 border-text shadow-raw p-12">
+      <h2 class="font-display text-3xl font-bold mb-4">Join Our Mission</h2>
+      <p class="text-text/60 font-medium mb-6 max-w-2xl mx-auto">
+        Whether you're a designer looking for authentic fonts or a type creator wanting to share your work, 
+        we'd love to have you in our community.
+      </p>
+      <div class="flex gap-4 justify-center">
+        <button onclick="window.location.href='fonts.html'" class="btn-primary">Browse Fonts</button>
+        <button onclick="window.location.href='designers.html'" class="btn-outline">Become a Designer</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-text text-white py-12 border-t-4 border-teal relative z-10 mt-12">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="md:col-span-2">
+        <h3 class="font-brush text-2xl mb-4">NAMMA FONTSU</h3>
+        <p class="text-white/60 max-w-sm">A platform for designers to discover, preview, and license authentic Indian regional typefaces. Designed for culture.</p>
+      </div>
+      <div>
+        <h4 class="font-bold uppercase tracking-widest text-teal mb-4 text-xs">Platform</h4>
+        <ul class="space-y-2 text-sm text-white/80">
+          <li><a href="fonts.html" class="hover:text-white">Browse Fonts</a></li>
+          <li><a href="designers.html" class="hover:text-white">Sell Your Fonts</a></li>
+          <li><a href="#" class="hover:text-white">Licensing Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold uppercase tracking-widest text-teal mb-4 text-xs">Connect</h4>
+        <ul class="space-y-2 text-sm text-white/80">
+          <li><a href="#" class="hover:text-white">Instagram</a></li>
+          <li><a href="#" class="hover:text-white">Twitter / X</a></li>
+          <li><a href="#" class="hover:text-white">Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/app.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>

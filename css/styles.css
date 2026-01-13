@@ -1,0 +1,210 @@
+/* Global Raw Aesthetic Styles for Namma Fontsu */
+
+/* Base Styles */
+body {
+  background-color: #F5F5F0;
+  color: #111111;
+  font-family: 'Manrope', sans-serif;
+  min-height: 100vh;
+}
+
+/* Texture Overlay */
+.texture-overlay {
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjAzIi8+PC9zdmc+');
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+/* Raw Button Styles */
+.btn-primary {
+  background-color: #111111;
+  color: white;
+  font-weight: 700;
+  padding: 12px 24px;
+  border: 2px solid #111111;
+  box-shadow: 4px 4px 0px #007F8C;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #007F8C;
+}
+
+.btn-primary:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #111111;
+  font-weight: 700;
+  padding: 12px 24px;
+  border: 2px solid #111111;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background: #111111;
+  color: white;
+}
+
+/* Card Styles */
+.card-raw {
+  background: #E2E2DC;
+  border: 2px solid #111111;
+  padding: 24px;
+  transition: transform 0.2s;
+}
+
+.card-raw:hover {
+  transform: translateY(-4px);
+  border-color: #007F8C;
+}
+
+/* Custom Range Slider */
+input[type=range] {
+  -webkit-appearance: none; 
+  background: transparent; 
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px; 
+  width: 20px;
+  border-radius: 50%; 
+  background: #007F8C;
+  border: 2px solid #111111; 
+  cursor: pointer;
+  margin-top: -8px; 
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%; 
+  height: 4px; 
+  background: #111111;
+}
+
+/* Hide Scrollbar */
+.no-scrollbar::-webkit-scrollbar { 
+  display: none; 
+}
+
+.no-scrollbar { 
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+/* Loading Spinner */
+.loader { 
+  border: 4px solid #f3f3f3; 
+  border-top: 4px solid #007F8C; 
+  border-radius: 50%; 
+  width: 24px; 
+  height: 24px; 
+  animation: spin 1s linear infinite; 
+}
+
+@keyframes spin { 
+  0% { transform: rotate(0deg); } 
+  100% { transform: rotate(360deg); } 
+}
+
+/* Navigation Styles */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(245, 245, 240, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid #111111;
+}
+
+nav .logo {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.25rem;
+  color: #111111;
+  letter-spacing: 0.05em;
+}
+
+nav a {
+  text-decoration: none;
+  color: #111111;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: #007F8C;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #111111;
+  color: white;
+  padding: 3rem 0;
+  border-top: 4px solid #007F8C;
+}
+
+footer h3 {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+footer h4 {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #007F8C;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+}
+
+footer a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+footer a:hover {
+  color: white;
+}
+
+/* Utility Classes */
+.shadow-raw {
+  box-shadow: 4px 4px 0px 0px #111111;
+}
+
+.shadow-raw-hover:hover {
+  box-shadow: 2px 2px 0px 0px #111111;
+}
+
+.shadow-raw-teal {
+  box-shadow: 4px 4px 0px 0px #007F8C;
+}
+
+/* Text Selection */
+::selection {
+  background-color: #007F8C;
+  color: white;
+}
+
+/* Container */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}

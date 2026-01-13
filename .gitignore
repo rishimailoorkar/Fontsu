@@ -1,0 +1,27 @@
+# Supabase Configuration - IMPORTANT: Never commit with real credentials!
+php/config.php
+
+# Upload directories
+php/uploads/
+
+# PHP temporary files
+*.log
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Environment files
+.env
+.env.local
+
+# Backup files
+*.bak
+*~

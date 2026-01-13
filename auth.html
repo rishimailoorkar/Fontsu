@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Sign Up - Namma Fontsu</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@200;400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#F5F5F0',
+            text: '#111111',
+            card: '#E2E2DC',
+            teal: '#007F8C',
+            highlight: '#E6B325',
+            dark: '#0C0C0C',
+            white: '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            brush: ['"Permanent Marker"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    .texture-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .auth-image {
+      background: url('assets/Image.png') center/cover;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .auth-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #111111;
+      background: white;
+      color: #111111;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: #007F8C;
+      box-shadow: 4px 4px 0px #111111;
+      transform: translateY(-2px);
+    }
+    
+    .form-input::placeholder {
+      color: rgba(17, 17, 17, 0.4);
+    }
+    
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.2s;
+      border: 2px solid #111111;
+      background: transparent;
+      cursor: pointer;
+      flex: 1;
+    }
+    
+    .tab-btn.active {
+      background: #111111;
+      color: white;
+      box-shadow: 4px 4px 0px #007F8C;
+      transform: translateY(-2px);
+    }
+    
+    .tab-btn:not(.active) {
+      color: #111111;
+    }
+    
+    .tab-btn:not(.active):hover {
+      background: #E2E2DC;
+      transform: translateY(-1px);
+    }
+    
+    .tabs-container {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .auth-btn {
+      width: 100%;
+      padding: 0.875rem 1.5rem;
+      background: #111111;
+      color: white;
+      font-weight: 700;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 2px solid #111111;
+      transition: all 0.2s;
+      box-shadow: 4px 4px 0px #007F8C;
+      cursor: pointer;
+    }
+    
+    .auth-btn:hover:not(:disabled) {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #007F8C;
+    }
+    
+    .auth-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    select.form-input {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex selection:bg-teal selection:text-white">
+
+  <!-- Texture Overlay -->
+  <div class="texture-overlay"></div>
+
+  <!-- Main Container -->
+  <div class="flex min-h-screen w-full relative z-10">
+    
+    <!-- Left Side - Image with Cinematic Overlay -->
+    <div class="hidden lg:flex lg:w-1/2 auth-image">
+      <!-- Empty - just background image with overlay -->
+    </div>
+    
+    <!-- Right Side - Auth Forms -->
+    <div class="w-full lg:w-1/2 bg-bg flex items-center justify-center p-6 md:p-10 overflow-y-auto">
+      <div class="w-full max-w-md space-y-5 my-8">
+        
+        <!-- Logo -->
+        <div class="text-center mb-6">
+          <a href="index.html" class="inline-flex flex-col items-center leading-none group">
+            <div class="text-2xl font-brush text-text tracking-wide scale-y-110">NAMMA</div>
+            <div class="text-2xl font-brush text-text tracking-wide relative scale-y-110">
+              FONTSU
+              <span class="absolute -bottom-1 left-0 w-full h-1 bg-teal rounded-full transform scale-x-100 origin-left group-hover:scale-x-110 transition-transform"></span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="tabs-container">
+          <button onclick="switchTab('login')" id="login-tab" class="tab-btn active">
+            Login
+          </button>
+          <button onclick="switchTab('signup')" id="signup-tab" class="tab-btn">
+            Sign Up
+          </button>
+        </div>
+        
+        <!-- Login Form -->
+        <div id="login-form" class="space-y-6">
+          <div class="space-y-1 text-center">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-text leading-tight">Welcome Back</h2>
+            <p class="text-text/60 font-medium text-base">Enter your credentials to continue</p>
+          </div>
+          
+          <form onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-text mb-2 uppercase tracking-widest">Email</label>
+              <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+            </div>
+            
+            <div>
+              <label class="block text-xs font-bold text-text mb-2 uppercase tracking-widest">Password</label>
+              <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+            </div>
+            
+            <div class="flex items-center justify-between text-sm pt-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="w-4 h-4 border-2 border-text accent-teal">
+                <span class="text-text/70 font-medium">Remember me</span>
+              </label>
+              <a href="#" class="text-teal font-bold hover:underline">Forgot password?</a>
+            </div>
+            
+            <button type="submit" class="auth-btn mt-4">
+              Log In
+            </button>
+          </form>
+          
+          <div class="text-center text-sm text-text/60 pt-2">
+            Don't have an account? 
+            <button onclick="switchTab('signup')" class="text-teal font-bold hover:underline">Sign up here</button>
+          </div>
+        </div>
+        
+        <!-- Signup Form -->
+        <div id="signup-form" class="space-y-6 hidden">
+          <div class="space-y-1 text-center">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-text leading-tight">Create Account</h2>
+            <p class="text-text/60 font-medium text-base">Join the Namma Fontsu community</p>
+          </div>
+          
+          <form onsubmit="handleSignup(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-text mb-2 uppercase tracking-widest">Full Name</label>
+              <input type="text" name="name" class="form-input" placeholder="John Doe" required>
+            </div>
+            
+            <div>
+              <label class="block text-xs font-bold text-text mb-2 uppercase tracking-widest">Email</label>
+              <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+            </div>
+            
+            <div>
+              <label class="block text-xs font-bold text-text mb-2 uppercase tracking-widest">Phone (Optional)</label>
+              <input type="tel" name="phone" class="form-input" placeholder="1234567890" pattern="[0-9]{7,15}">
+            </div>
+            
+            <div>
+              <label class="block text-xs font-bold text-text mb-2 uppercase tracking-widest">Password</label>
+              <input type="password" name="password" class="form-input" placeholder="••••••••" minlength="6" required>
+            </div>
+            
+            <div>
+              <label class="block text-xs font-bold text-text mb-2 uppercase tracking-widest">I am a</label>
+              <select name="role" class="form-input" required>
+                <option value="">Select your role...</option>
+                <option value="buyer">Designer / Buyer</option>
+                <option value="seller">Type Designer / Seller</option>
+                <option value="both">Both</option>
+              </select>
+            </div>
+            
+            <label class="flex items-start gap-3 cursor-pointer text-sm pt-2">
+              <input type="checkbox" class="w-4 h-4 border-2 border-text mt-0.5 accent-teal" required>
+              <span class="text-text/70 font-medium">
+                I agree to the <a href="#" class="text-teal font-bold hover:underline">Terms & Conditions</a> 
+                and <a href="#" class="text-teal font-bold hover:underline">Privacy Policy</a>
+              </span>
+            </label>
+            
+            <button type="submit" class="auth-btn mt-4">
+              Create Account
+            </button>
+          </form>
+          
+          <div class="text-center text-sm text-text/60 pt-2">
+            Already have an account? 
+            <button onclick="switchTab('login')" class="text-teal font-bold hover:underline">Log in here</button>
+          </div>
+        </div>
+        
+        <!-- Back to Home -->
+        <div class="text-center pt-4">
+          <a href="index.html" class="inline-flex items-center gap-2 text-sm font-bold text-text/60 hover:text-teal transition-colors">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Back to Home</span>
+          </a>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Tab switching
+    function switchTab(tab) {
+      const loginTab = document.getElementById('login-tab');
+      const signupTab = document.getElementById('signup-tab');
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      
+      if (tab === 'login') {
+        loginTab.classList.add('active');
+        signupTab.classList.remove('active');
+        loginForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+      } else {
+        signupTab.classList.add('active');
+        loginTab.classList.remove('active');
+        signupForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      }
+    }
+
+    // Handle login
+    async function handleLogin(e) {
+      e.preventDefault();
+      const form = e.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      
+      const data = {
+        email: form.email.value.trim(),
+        password: form.password.value
+      };
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Logging in...';
+      
+      try {
+        const response = await fetch('php/auth_login.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          // Store user data
+          localStorage.setItem('user', JSON.stringify(result.user));
+          
+          // Show success message
+          submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Success!';
+          submitBtn.classList.add('bg-teal');
+          
+          // Redirect based on role
+          setTimeout(() => {
+            if (result.user.role === 'seller' || result.user.role === 'both') {
+              window.location.href = 'designers.html';
+            } else {
+              window.location.href = 'fonts.html';
+            }
+          }, 1000);
+        } else {
+          // Show error
+          alert('Login failed: ' + result.message);
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('An error occurred. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    }
+
+    // Handle signup
+    async function handleSignup(e) {
+      e.preventDefault();
+      const form = e.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      
+      const data = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        password: form.password.value,
+        role: form.role.value
+      };
+      
+      // Validate role selection
+      if (!data.role) {
+        alert('Please select your role');
+        return;
+      }
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Creating account...';
+      
+      try {
+        const response = await fetch('php/auth_signup.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          // Store user data
+          localStorage.setItem('user', JSON.stringify(result.user));
+          
+          // Show success message
+          submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Account Created!';
+          submitBtn.classList.add('bg-teal');
+          
+          // Redirect based on role
+          setTimeout(() => {
+            if (result.user.role === 'seller' || result.user.role === 'both') {
+              window.location.href = 'designers.html';
+            } else {
+              window.location.href = 'fonts.html';
+            }
+          }, 1000);
+        } else {
+          // Show error
+          alert('Signup failed: ' + result.message);
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        alert('An error occurred. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Namma Fontsu</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@200;400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#F5F5F0',
+            text: '#111111',
+            card: '#E2E2DC',
+            teal: '#007F8C',
+            highlight: '#E6B325',
+            dark: '#0C0C0C',
+            white: '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            brush: ['"Permanent Marker"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-teal selection:text-white">
+
+  <!-- Texture Overlay -->
+  <div class="texture-overlay"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-bg/95 backdrop-blur-md border-b-2 border-text">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex flex-col items-start leading-none group">
+        <div class="text-xl font-brush text-text tracking-wide scale-y-110">NAMMA</div>
+        <div class="text-xl font-brush text-text tracking-wide relative scale-y-110">
+          FONTSU
+          <span class="absolute -bottom-1 left-0 w-full h-1 bg-teal rounded-full transform scale-x-100 origin-left group-hover:scale-x-110 transition-transform"></span>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-8 font-bold text-sm">
+        <a href="fonts.html" class="hover:text-teal uppercase tracking-wider">All Fonts</a>
+        <a href="designers.html" class="hover:text-teal uppercase tracking-wider">Designers</a>
+        <a href="about.html" class="hover:text-teal uppercase tracking-wider">About</a>
+        <a href="admin.html" class="hover:text-teal uppercase tracking-wider text-teal">Admin</a>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <button onclick="window.location.href='index.html'" class="hidden md:block btn-outline py-2 px-6 text-xs uppercase tracking-widest">
+          Exit Admin
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 w-full max-w-7xl mx-auto p-6 md:p-12 relative z-10">
+    
+    <!-- Admin Header -->
+    <div class="mb-8">
+      <h1 class="font-display text-4xl font-bold mb-2">Admin Dashboard</h1>
+      <p class="text-text/60 font-bold">Manage fonts, approve uploads, and moderate content</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+      <div class="bg-white border-2 border-text shadow-raw p-6">
+        <div class="text-xs font-bold uppercase tracking-widest text-text/40 mb-2">Total Fonts</div>
+        <div class="font-display text-3xl font-bold" id="totalFonts">0</div>
+      </div>
+      <div class="bg-white border-2 border-text shadow-raw p-6">
+        <div class="text-xs font-bold uppercase tracking-widest text-text/40 mb-2">Pending Approval</div>
+        <div class="font-display text-3xl font-bold text-highlight" id="pendingFonts">0</div>
+      </div>
+      <div class="bg-white border-2 border-text shadow-raw p-6">
+        <div class="text-xs font-bold uppercase tracking-widest text-text/40 mb-2">Approved</div>
+        <div class="font-display text-3xl font-bold text-teal" id="approvedFonts">0</div>
+      </div>
+      <div class="bg-white border-2 border-text shadow-raw p-6">
+        <div class="text-xs font-bold uppercase tracking-widest text-text/40 mb-2">Rejected</div>
+        <div class="font-display text-3xl font-bold text-red-600" id="rejectedFonts">0</div>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="mb-6 flex gap-4 border-b-2 border-text pb-4">
+      <button onclick="filterFonts('all')" class="filter-tab active px-4 py-2 font-bold uppercase text-sm tracking-wider" data-filter="all">All Fonts</button>
+      <button onclick="filterFonts('pending')" class="filter-tab px-4 py-2 font-bold uppercase text-sm tracking-wider" data-filter="pending">Pending</button>
+      <button onclick="filterFonts('approved')" class="filter-tab px-4 py-2 font-bold uppercase text-sm tracking-wider" data-filter="approved">Approved</button>
+      <button onclick="filterFonts('rejected')" class="filter-tab px-4 py-2 font-bold uppercase text-sm tracking-wider" data-filter="rejected">Rejected</button>
+    </div>
+
+    <!-- Fonts Table -->
+    <div class="bg-white border-2 border-text shadow-raw overflow-hidden">
+      <table class="w-full">
+        <thead class="bg-text text-white">
+          <tr>
+            <th class="p-4 text-left text-xs font-bold uppercase tracking-wider">Font Name</th>
+            <th class="p-4 text-left text-xs font-bold uppercase tracking-wider">Designer</th>
+            <th class="p-4 text-left text-xs font-bold uppercase tracking-wider">Script</th>
+            <th class="p-4 text-left text-xs font-bold uppercase tracking-wider">Category</th>
+            <th class="p-4 text-left text-xs font-bold uppercase tracking-wider">Status</th>
+            <th class="p-4 text-left text-xs font-bold uppercase tracking-wider">Uploaded</th>
+            <th class="p-4 text-left text-xs font-bold uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="fontsTableBody">
+          <tr>
+            <td colspan="7" class="p-8 text-center text-text/60">
+              <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i>
+              <p class="font-bold">Loading fonts...</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- No Results Message -->
+    <div id="noResults" class="hidden text-center py-12">
+      <i class="fa-solid fa-inbox text-4xl text-text/20 mb-4"></i>
+      <p class="text-text/60 font-bold">No fonts found</p>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-text text-white py-12 border-t-4 border-teal relative z-10 mt-12">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h3 class="font-brush text-2xl mb-4">NAMMA FONTSU</h3>
+      <p class="text-white/60">Admin Dashboard - Manage your font marketplace</p>
+    </div>
+  </footer>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6">
+    <div class="bg-white border-2 border-text shadow-raw max-w-md w-full p-8">
+      <h3 class="font-display text-2xl font-bold mb-4" id="modalTitle">Confirm Action</h3>
+      <p class="text-text/80 mb-6" id="modalMessage">Are you sure you want to perform this action?</p>
+      <div class="flex gap-4">
+        <button onclick="closeModal()" class="flex-1 btn-outline py-3 px-6 text-xs uppercase tracking-widest">Cancel</button>
+        <button id="confirmBtn" class="flex-1 btn-primary py-3 px-6 text-xs uppercase tracking-widest">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/app.js"></script>
+  <script>
+    let allFonts = [];
+    let currentFilter = 'all';
+
+    // Load fonts on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadFonts();
+    });
+
+    // Load all fonts from the server
+    async function loadFonts() {
+      try {
+        const response = await fetch('php/admin_get_fonts.php');
+        const result = await response.json();
+        
+        if (result.success) {
+          allFonts = result.data;
+          updateStats();
+          displayFonts(allFonts);
+        } else {
+          throw new Error(result.message || 'Failed to load fonts');
+        }
+      } catch (error) {
+        console.error('Error loading fonts:', error);
+        document.getElementById('fontsTableBody').innerHTML = `
+          <tr>
+            <td colspan="7" class="p-8 text-center text-red-600">
+              <i class="fa-solid fa-exclamation-triangle text-2xl mb-2"></i>
+              <p class="font-bold">Error loading fonts: ${error.message}</p>
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    // Update statistics
+    function updateStats() {
+      const total = allFonts.length;
+      const pending = allFonts.filter(f => f.status === 'pending').length;
+      const approved = allFonts.filter(f => f.status === 'approved').length;
+      const rejected = allFonts.filter(f => f.status === 'rejected').length;
+
+      document.getElementById('totalFonts').textContent = total;
+      document.getElementById('pendingFonts').textContent = pending;
+      document.getElementById('approvedFonts').textContent = approved;
+      document.getElementById('rejectedFonts').textContent = rejected;
+    }
+
+    // Filter fonts by status
+    function filterFonts(status) {
+      currentFilter = status;
+      
+      // Update active tab
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelector(`[data-filter="${status}"]`).classList.add('active');
+
+      // Filter and display
+      const filtered = status === 'all' 
+        ? allFonts 
+        : allFonts.filter(f => f.status === status);
+      
+      displayFonts(filtered);
+    }
+
+    // Display fonts in table
+    function displayFonts(fonts) {
+      const tbody = document.getElementById('fontsTableBody');
+      const noResults = document.getElementById('noResults');
+
+      if (fonts.length === 0) {
+        tbody.innerHTML = '';
+        noResults.classList.remove('hidden');
+        return;
+      }
+
+      noResults.classList.add('hidden');
+      tbody.innerHTML = fonts.map(font => `
+        <tr class="hover:bg-bg transition-colors" data-font-id="${font.id}">
+          <td class="p-4 font-bold">${escapeHtml(font.name)}</td>
+          <td class="p-4">${escapeHtml(font.designer)}</td>
+          <td class="p-4">${escapeHtml(font.script)}</td>
+          <td class="p-4">${escapeHtml(font.category)}</td>
+          <td class="p-4">
+            ${getStatusBadge(font.status)}
+          </td>
+          <td class="p-4 text-sm text-text/60">${formatDate(font.created_at)}</td>
+          <td class="p-4">
+            <div class="flex gap-2">
+              ${font.status === 'pending' ? `
+                <button onclick="updateFontStatus(${font.id}, 'approved')" class="px-3 py-1 bg-teal text-white text-xs font-bold uppercase border border-teal hover:bg-teal/80 transition-colors" title="Approve">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+                <button onclick="updateFontStatus(${font.id}, 'rejected')" class="px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase border border-red-600 hover:bg-red-700 transition-colors" title="Reject">
+                  <i class="fa-solid fa-times"></i>
+                </button>
+              ` : ''}
+              ${font.status === 'approved' ? `
+                <button onclick="updateFontStatus(${font.id}, 'rejected')" class="px-3 py-1 bg-highlight text-text text-xs font-bold uppercase border border-text hover:bg-highlight/80 transition-colors" title="Unapprove">
+                  <i class="fa-solid fa-ban"></i>
+                </button>
+              ` : ''}
+              ${font.status === 'rejected' ? `
+                <button onclick="updateFontStatus(${font.id}, 'approved')" class="px-3 py-1 bg-teal text-white text-xs font-bold uppercase border border-teal hover:bg-teal/80 transition-colors" title="Approve">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+              ` : ''}
+              <button onclick="deleteFont(${font.id}, '${escapeHtml(font.name)}')" class="px-3 py-1 bg-text text-white text-xs font-bold uppercase border border-text hover:bg-text/80 transition-colors" title="Delete">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Get status badge HTML
+    function getStatusBadge(status) {
+      const badges = {
+        'pending': '<span class="inline-block px-2 py-1 bg-highlight text-text border border-text text-xs font-bold uppercase">Pending</span>',
+        'approved': '<span class="inline-block px-2 py-1 bg-teal text-white border border-teal text-xs font-bold uppercase">Approved</span>',
+        'rejected': '<span class="inline-block px-2 py-1 bg-red-600 text-white border border-red-600 text-xs font-bold uppercase">Rejected</span>'
+      };
+      return badges[status] || status;
+    }
+
+    // Format date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-IN', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Update font status
+    async function updateFontStatus(fontId, newStatus) {
+      const statusText = newStatus === 'approved' ? 'approve' : 'reject';
+      const font = allFonts.find(f => f.id === fontId);
+      
+      showModal(
+        `${statusText.charAt(0).toUpperCase() + statusText.slice(1)} Font`,
+        `Are you sure you want to ${statusText} "${font.name}"?`,
+        async () => {
+          try {
+            const response = await fetch('php/admin_update_font.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: fontId, status: newStatus })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+              // Update local data
+              const fontIndex = allFonts.findIndex(f => f.id === fontId);
+              if (fontIndex !== -1) {
+                allFonts[fontIndex].status = newStatus;
+              }
+              
+              updateStats();
+              filterFonts(currentFilter);
+              showNotification(`Font ${statusText}ed successfully!`, 'success');
+            } else {
+              throw new Error(result.message || 'Failed to update font');
+            }
+          } catch (error) {
+            console.error('Error updating font:', error);
+            showNotification(`Error: ${error.message}`, 'error');
+          }
+          closeModal();
+        }
+      );
+    }
+
+    // Delete font
+    function deleteFont(fontId, fontName) {
+      showModal(
+        'Delete Font',
+        `Are you sure you want to permanently delete "${fontName}"? This action cannot be undone.`,
+        async () => {
+          try {
+            const response = await fetch('php/admin_delete_font.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: fontId })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+              // Remove from local data
+              allFonts = allFonts.filter(f => f.id !== fontId);
+              
+              updateStats();
+              filterFonts(currentFilter);
+              showNotification('Font deleted successfully!', 'success');
+            } else {
+              throw new Error(result.message || 'Failed to delete font');
+            }
+          } catch (error) {
+            console.error('Error deleting font:', error);
+            showNotification(`Error: ${error.message}`, 'error');
+          }
+          closeModal();
+        }
+      );
+    }
+
+    // Show confirmation modal
+    function showModal(title, message, onConfirm) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalMessage').textContent = message;
+      document.getElementById('confirmModal').classList.remove('hidden');
+      
+      document.getElementById('confirmBtn').onclick = onConfirm;
+    }
+
+    // Close modal
+    function closeModal() {
+      document.getElementById('confirmModal').classList.add('hidden');
+    }
+
+    // Show notification
+    function showNotification(message, type = 'success') {
+      const notification = document.createElement('div');
+      notification.className = `fixed top-24 right-6 z-50 px-6 py-4 border-2 border-text shadow-raw font-bold ${
+        type === 'success' ? 'bg-teal text-white' : 'bg-red-600 text-white'
+      }`;
+      notification.innerHTML = `
+        <i class="fa-solid fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} mr-2"></i>
+        ${message}
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.transition = 'opacity 0.3s';
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+  </script>
+
+  <style>
+    .filter-tab {
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .filter-tab:hover {
+      color: #007F8C;
+    }
+    
+    .filter-tab.active {
+      color: #007F8C;
+      border-bottom-color: #007F8C;
+    }
+  </style>
+</body>
+</html>
