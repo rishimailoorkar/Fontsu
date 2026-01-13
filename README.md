@@ -32,9 +32,6 @@ A modern web platform for discovering, previewing, and licensing authentic India
 ### Installation
 
 1. **Clone or download this project**
-   ```bash
-   cd "c:\Users\mailo\Downloads\Namma Fontsu"
-   ```
 
 2. **Configure Supabase**
    - Follow the complete guide in `SUPABASE_SETUP.md`
@@ -231,4 +228,4 @@ For setup issues:
 
 ---
 
-**Built with ❤️ for Indian typography**
+**Built with ❤️ for Indian typography by Rishi Mailoorkar**
